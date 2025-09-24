@@ -78,10 +78,8 @@ public class BaseInitData {
         post3.addComment(memberUser3,"댓글 3-2");
     }
 
-    @Profile("div")
-    @Bean
-    ApplicationRunner devInitDataApplicationRunner() {
-        return args ->
-                System.out.println("devInitDataApplicationRunner 실행");
+    @Transactional
+    public void work3() {
+
     }
 }
