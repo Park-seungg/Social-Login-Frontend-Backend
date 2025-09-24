@@ -1,12 +1,13 @@
 package com.back.global.rsData;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.lang.NonNull;
 
 public record RsData<T>(
-        String resultCode,
+        @NonNull String resultCode,
         @JsonIgnore
-        int statusCode,
-        String msg,
+        @NonNull int statusCode,
+        @NonNull String msg,
         T data){
     public RsData(String resultCode, String msg) {
         this(resultCode, msg, null);
