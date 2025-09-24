@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 public record PostDto(long id,
                       LocalDateTime createDate,
                       LocalDateTime modifyDate,
-                      String authorName,
                       String title,
                       String content) {
     public PostDto(Post post) {
@@ -15,7 +14,6 @@ public record PostDto(long id,
                 post.getId(),
                 post.getCreateDate(),
                 post.getModifyDate(),
-                post.getAuthor().getNickname(),
                 post.getTitle(),
                 post.getContent()
         );
