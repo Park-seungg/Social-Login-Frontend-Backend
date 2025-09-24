@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function Page() {
-  type PostDto = components['schemas']['PostDto']
+  type PostDto = components['schemas']['PostWithAuthorDto']
   const [posts, setPosts] = useState<PostDto[] | null>(null)
 
   useEffect(() => {
