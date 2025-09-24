@@ -1,19 +1,22 @@
-'use client'
+"use client";
 
-import { components } from '@/lib/backend/apiV1/schema'
-import { apiFetch } from '@/lib/backend/client'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
+
+import Link from "next/link";
+
+import { apiFetch } from "@/lib/backend/client";
+
+import { components } from "@/lib/backend/apiV1/schema";
 
 export default function Page() {
-  type PostDto = components['schemas']['PostWithAuthorDto']
-  const [posts, setPosts] = useState<PostDto[] | null>(null)
+  type PostDto = components["schemas"]["PostWithAuthorDto"];
+  const [posts, setPosts] = useState<PostDto[] | null>(null);
 
   useEffect(() => {
     // (data) => setPosts(data) == setPosts
-    apiFetch('/api/v1/posts').then(setPosts)
-  }, [])
-  if (posts === null) return <div>로딩중...</div>
+    apiFetch("/api/v1/posts").then(setPosts);
+  }, []);
+  if (posts === null) return <div>로딩중...</div>;
 
   return (
     <>
@@ -35,5 +38,5 @@ export default function Page() {
         <Link href="/posts/write">글쓰기</Link>
       </div>
     </>
-  )
+  );
 }

@@ -1,86 +1,89 @@
-'use client'
+"use client";
 
-import { apiFetch } from '@/lib/backend/client'
-import { components } from '@/lib/backend/apiV1/schema'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { use, useEffect, useState } from 'react'
+import { use, useEffect, useState } from "react";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { apiFetch } from "@/lib/backend/client";
+
+import { components } from "@/lib/backend/apiV1/schema";
 
 export default function Page({ params }: { params: Promise<{ id: number }> }) {
-  type PostDto = components['schemas']['PostWithAuthorDto']
-  type PostCommentDto = components['schemas']['PostCommentDto']
+  type PostDto = components["schemas"]["PostWithAuthorDto"];
+  type PostCommentDto = components["schemas"]["PostCommentDto"];
 
-  const [post, setPost] = useState<PostDto | null>(null)
+  const [post, setPost] = useState<PostDto | null>(null);
   const [postComments, setPostComments] = useState<PostCommentDto[] | null>(
     null,
-  )
+  );
 
-  const { id } = use(params)
+  const { id } = use(params);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const deletePost = (id: number) => {
-    if (!confirm('정말 삭제하시겠습니까?')) return
+    if (!confirm("정말 삭제하시겠습니까?")) return;
 
     apiFetch(`/api/v1/posts/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }).then((data) => {
-      alert(data.msg)
-      router.replace('/posts')
-    })
-  }
+      alert(data.msg);
+      router.replace("/posts");
+    });
+  };
 
   const deletePostComment = (id: number, commentId: number) => {
-    if (!confirm('정말 삭제하시겠습니까?')) return
+    if (!confirm("정말 삭제하시겠습니까?")) return;
 
     apiFetch(`/api/v1/posts/${id}/comments/${commentId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }).then((data) => {
-      alert(data.msg)
+      alert(data.msg);
 
-      if (postComments === null) return
+      if (postComments === null) return;
 
       setPostComments(
         postComments.filter((comment) => comment.id !== commentId),
-      )
-    })
-  }
+      );
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const form = e.target as HTMLFormElement
+    const form = e.target as HTMLFormElement;
 
     const contentInput = form.elements.namedItem(
-      'content',
-    ) as HTMLTextAreaElement
+      "content",
+    ) as HTMLTextAreaElement;
 
-    if (contentInput.value.trim() === '' || contentInput.value.length === 0) {
-      alert('댓글 내용을 입력해주세요.')
-      contentInput.focus()
-      return
+    if (contentInput.value.trim() === "" || contentInput.value.length === 0) {
+      alert("댓글 내용을 입력해주세요.");
+      contentInput.focus();
+      return;
     }
 
     apiFetch(`/api/v1/posts/${id}/comments`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         content: contentInput.value,
       }),
     }).then((data) => {
-      alert(data.msg)
+      alert(data.msg);
 
-      if (postComments === null) return
-      setPostComments([...postComments, data.data])
-    })
-  }
+      if (postComments === null) return;
+      setPostComments([...postComments, data.data]);
+    });
+  };
 
   useEffect(() => {
-    apiFetch(`/api/v1/posts/${id}`).then(setPost)
+    apiFetch(`/api/v1/posts/${id}`).then(setPost);
 
-    apiFetch(`/api/v1/posts/${id}/comments`).then(setPostComments)
-  }, [])
+    apiFetch(`/api/v1/posts/${id}/comments`).then(setPostComments);
+  }, []);
 
-  if (post === null) return <div>로딩중...</div>
+  if (post === null) return <div>로딩중...</div>;
 
   return (
     <>
@@ -135,5 +138,5 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
         </ul>
       )}
     </>
-  )
+  );
 }
