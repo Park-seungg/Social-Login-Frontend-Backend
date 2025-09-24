@@ -217,21 +217,23 @@ export interface components {
             title: string;
             content: string;
         };
-        PostDto: {
+        PostWithAuthorDto: {
             /** Format: int64 */
             id?: number;
             /** Format: date-time */
             createDate?: string;
             /** Format: date-time */
             modifyDate?: string;
+            /** Format: int64 */
+            authorId?: number;
             authorName?: string;
             title?: string;
             content?: string;
         };
-        RsDataPostDto: {
+        RsDataPostWithAuthorDto: {
             resultCode?: string;
             msg?: string;
-            data?: components["schemas"]["PostDto"];
+            data?: components["schemas"]["PostWithAuthorDto"];
         };
         PostCommentWriteReqBody: {
             content: string;
@@ -297,6 +299,21 @@ export interface components {
             modifyDate?: string;
             nickname?: string;
             username?: string;
+        };
+        PostDto: {
+            /** Format: int64 */
+            id?: number;
+            /** Format: date-time */
+            createDate?: string;
+            /** Format: date-time */
+            modifyDate?: string;
+            title?: string;
+            content?: string;
+        };
+        RsDataPostDto: {
+            resultCode?: string;
+            msg?: string;
+            data?: components["schemas"]["PostDto"];
         };
     };
     responses: never;
@@ -397,7 +414,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["PostDto"];
+                    "application/json;charset=UTF-8": components["schemas"]["PostWithAuthorDto"];
                 };
             };
         };
@@ -465,7 +482,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["PostDto"][];
+                    "application/json;charset=UTF-8": components["schemas"]["PostWithAuthorDto"][];
                 };
             };
         };
@@ -489,7 +506,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["RsDataPostDto"];
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataPostWithAuthorDto"];
                 };
             };
         };
