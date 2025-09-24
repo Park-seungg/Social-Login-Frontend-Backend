@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "next eslint",
+    "lint": "next lint",
     "format": "prettier --write . --ignore-path .prettierignore",
     "tsc": "tsc --noEmit"
   },
