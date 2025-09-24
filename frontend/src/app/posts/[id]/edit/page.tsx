@@ -1,60 +1,60 @@
-'use client'
+"use client";
 
-import { use, useEffect, useState } from 'react'
+import { use, useEffect, useState } from "react";
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
-import { apiFetch } from '@/lib/backend/client'
+import { apiFetch } from "@/lib/backend/client";
 
-import { components } from '@/lib/backend/apiV1/schema'
+import { components } from "@/lib/backend/apiV1/schema";
 
 export default function Page({ params }: { params: Promise<{ id: number }> }) {
-  type PostDto = components['schemas']['PostWithAuthorDto']
-  const { id } = use(params)
+  type PostDto = components["schemas"]["PostWithAuthorDto"];
+  const { id } = use(params);
 
-  const [post, setPost] = useState<PostDto | null>(null)
+  const [post, setPost] = useState<PostDto | null>(null);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const form = e.target as HTMLFormElement
+    const form = e.target as HTMLFormElement;
 
-    const titleInput = form.elements.namedItem('title') as HTMLInputElement
+    const titleInput = form.elements.namedItem("title") as HTMLInputElement;
     const contentInput = form.elements.namedItem(
-      'content',
-    ) as HTMLTextAreaElement
+      "content",
+    ) as HTMLTextAreaElement;
 
-    if (titleInput.value.trim() === '' || titleInput.value.length === 0) {
-      alert('제목을 입력해주세요.')
-      titleInput.focus()
-      return
+    if (titleInput.value.trim() === "" || titleInput.value.length === 0) {
+      alert("제목을 입력해주세요.");
+      titleInput.focus();
+      return;
     }
 
-    if (contentInput.value.trim() === '' || contentInput.value.length === 0) {
-      alert('내용을 입력해주세요.')
-      contentInput.focus()
-      return
+    if (contentInput.value.trim() === "" || contentInput.value.length === 0) {
+      alert("내용을 입력해주세요.");
+      contentInput.focus();
+      return;
     }
 
     apiFetch(`/api/v1/posts/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify({
         title: titleInput.value,
         content: contentInput.value,
       }),
     }).then((data) => {
-      alert(data.msg)
-      router.replace(`/posts/${id}`)
-    })
-  }
+      alert(data.msg);
+      router.replace(`/posts/${id}`);
+    });
+  };
 
   useEffect(() => {
-    apiFetch(`/api/v1/posts/${id}`).then(setPost)
-  }, [id])
+    apiFetch(`/api/v1/posts/${id}`).then(setPost);
+  }, [id]);
 
-  if (post === null) return <div>로딩중...</div>
+  if (post === null) return <div>로딩중...</div>;
 
   return (
     <>
@@ -80,5 +80,5 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
         </button>
       </form>
     </>
-  )
+  );
 }
