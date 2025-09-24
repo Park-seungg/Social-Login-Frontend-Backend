@@ -11,6 +11,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
@@ -77,8 +78,10 @@ public class BaseInitData {
         post3.addComment(memberUser3,"댓글 3-2");
     }
 
-    @Transactional
-    public void work3() {
-
+    @Profile("div")
+    @Bean
+    ApplicationRunner devInitDataApplicationRunner() {
+        return args ->
+                System.out.println("devInitDataApplicationRunner 실행");
     }
 }
