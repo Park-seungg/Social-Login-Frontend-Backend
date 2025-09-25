@@ -8,7 +8,7 @@ public record RsData<T>(
         @JsonIgnore
         @NonNull int statusCode,
         @NonNull String msg,
-        T data){
+        @NonNull T data){
     public RsData(String resultCode, String msg) {
         this(resultCode, msg, null);
     }
