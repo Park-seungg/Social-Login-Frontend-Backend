@@ -1,29 +1,29 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next"
 
-import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
+import { Geist, Geist_Mono } from "next/font/google"
+import Link from "next/link"
 
-import "./globals.css";
+import "./globals.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
+})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: "사이트 A",
   description: "스프링부트, Next.js 연동",
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="ko">
@@ -50,5 +50,5 @@ export default function RootLayout({
         <footer className="text-center p-2">풋터</footer>
       </body>
     </html>
-  );
+  )
 }

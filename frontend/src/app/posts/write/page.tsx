@@ -1,32 +1,32 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"
 
-import { apiFetch } from "@/lib/backend/client";
+import { apiFetch } from "@/lib/backend/client"
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const form = e.target as HTMLFormElement;
+    const form = e.target as HTMLFormElement
 
-    const titleInput = form.elements.namedItem("title") as HTMLInputElement;
+    const titleInput = form.elements.namedItem("title") as HTMLInputElement
     const contentInput = form.elements.namedItem(
       "content",
-    ) as HTMLTextAreaElement;
+    ) as HTMLTextAreaElement
 
     if (titleInput.value.trim() === "" || titleInput.value.length === 0) {
-      alert("제목을 입력해주세요.");
-      titleInput.focus();
-      return;
+      alert("제목을 입력해주세요.")
+      titleInput.focus()
+      return
     }
 
     if (contentInput.value.trim() === "" || contentInput.value.length === 0) {
-      alert("내용을 입력해주세요.");
-      contentInput.focus();
-      return;
+      alert("내용을 입력해주세요.")
+      contentInput.focus()
+      return
     }
 
     apiFetch(`/api/v1/posts`, {
@@ -36,10 +36,10 @@ export default function Page() {
         content: contentInput.value,
       }),
     }).then((data) => {
-      alert(data.msg);
-      router.replace(`/posts/${data.data.id}`);
-    });
-  };
+      alert(data.msg)
+      router.replace(`/posts/${data.data.id}`)
+    })
+  }
 
   return (
     <>
@@ -62,5 +62,5 @@ export default function Page() {
         </button>
       </form>
     </>
-  );
+  )
 }

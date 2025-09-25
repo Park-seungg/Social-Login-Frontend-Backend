@@ -1,29 +1,29 @@
-"use client";
+"use client"
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useState } from "react"
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
-import { client } from "@/lib/backend/client";
+import { client } from "@/lib/backend/client"
 
-import { components } from "@/lib/backend/apiV1/schema";
+import { components } from "@/lib/backend/apiV1/schema"
 
 export default function Page({ params }: { params: Promise<{ id: number }> }) {
-  type PostDto = components["schemas"]["PostWithAuthorDto"];
-  type PostCommentDto = components["schemas"]["PostCommentDto"];
+  type PostDto = components["schemas"]["PostWithAuthorDto"]
+  type PostCommentDto = components["schemas"]["PostCommentDto"]
 
-  const [post, setPost] = useState<PostDto | null>(null);
+  const [post, setPost] = useState<PostDto | null>(null)
   const [postComments, setPostComments] = useState<PostCommentDto[] | null>(
     null,
-  );
+  )
 
-  const { id } = use(params);
+  const { id } = use(params)
 
-  const router = useRouter();
+  const router = useRouter()
 
   const deletePost = (id: number) => {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
+    if (!confirm("정말 삭제하시겠습니까?")) return
 
     client
       .DELETE("/api/v1/posts/{id}", {
@@ -35,16 +35,16 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
       })
       .then((res) => {
         if (res.error) {
-          alert(res.error.msg);
-          return;
+          alert(res.error.msg)
+          return
         }
-        alert(res.data.msg);
-        router.replace("/posts");
-      });
-  };
+        alert(res.data.msg)
+        router.replace("/posts")
+      })
+  }
 
   const deletePostComment = (id: number, commentId: number) => {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
+    if (!confirm("정말 삭제하시겠습니까?")) return
 
     client
       .DELETE("/api/v1/posts/{postId}/comments/{id}", {
@@ -57,32 +57,32 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
       })
       .then((res) => {
         if (res.error) {
-          alert(res.error.msg);
-          return;
+          alert(res.error.msg)
+          return
         }
-        alert(res.data.msg);
+        alert(res.data.msg)
 
-        if (postComments === null) return;
+        if (postComments === null) return
 
         setPostComments(
           postComments.filter((comment) => comment.id !== commentId),
-        );
-      });
-  };
+        )
+      })
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const form = e.target as HTMLFormElement;
+    const form = e.target as HTMLFormElement
 
     const contentInput = form.elements.namedItem(
       "content",
-    ) as HTMLTextAreaElement;
+    ) as HTMLTextAreaElement
 
     if (contentInput.value.trim() === "" || contentInput.value.length === 0) {
-      alert("댓글 내용을 입력해주세요.");
-      contentInput.focus();
-      return;
+      alert("댓글 내용을 입력해주세요.")
+      contentInput.focus()
+      return
     }
 
     client
@@ -98,18 +98,18 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
       })
       .then((res) => {
         if (res.error) {
-          alert(res.error.msg);
-          return;
+          alert(res.error.msg)
+          return
         }
 
-        alert(res.data.msg);
-        contentInput.value = "";
+        alert(res.data.msg)
+        contentInput.value = ""
 
-        if (postComments === null) return;
+        if (postComments === null) return
 
-        setPostComments([...postComments, res.data.data]);
-      });
-  };
+        setPostComments([...postComments, res.data.data])
+      })
+  }
 
   useEffect(() => {
     client
@@ -122,12 +122,12 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
       })
       .then((res) => {
         if (res.error) {
-          alert(res.error.msg);
-          return;
+          alert(res.error.msg)
+          return
         }
 
-        setPost(res.data);
-      });
+        setPost(res.data)
+      })
 
     client
       .GET("/api/v1/posts/{postId}/comments", {
@@ -139,15 +139,15 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
       })
       .then((res) => {
         if (res.error) {
-          alert(res.error.msg);
-          return;
+          alert(res.error.msg)
+          return
         }
 
-        setPostComments(res.data);
-      });
-  }, [id]);
+        setPostComments(res.data)
+      })
+  }, [id])
 
-  if (post === null) return <div>로딩중...</div>;
+  if (post === null) return <div>로딩중...</div>
 
   return (
     <>
@@ -202,5 +202,5 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
         </ul>
       )}
     </>
-  );
+  )
 }
