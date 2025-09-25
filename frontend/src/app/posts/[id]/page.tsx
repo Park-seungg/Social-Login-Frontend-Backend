@@ -82,15 +82,35 @@ export default function Page({ params }: { params: Promise<{ id: number }> }) {
       .GET("/api/v1/posts/{id}", {
         params: {
           path: {
-            id: id,
+            id,
           },
         },
       })
-      .then();
+      .then((res) => {
+        if (res.error) {
+          alert(res.error.msg);
+          return;
+        }
 
-    apiFetch(`/api/v1/posts/${id}`).then(setPost);
+        setPost(res.data);
+      });
 
-    apiFetch(`/api/v1/posts/${id}/comments`).then(setPostComments);
+    client
+      .GET("/api/v1/posts/{postId}/comments", {
+        params: {
+          path: {
+            postId: id,
+          },
+        },
+      })
+      .then((res) => {
+        if (res.error) {
+          alert(res.error.msg);
+          return;
+        }
+
+        setPostComments(res.data);
+      });
   }, [id]);
 
   if (post === null) return <div>로딩중...</div>;
