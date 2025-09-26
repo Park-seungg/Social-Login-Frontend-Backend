@@ -9,6 +9,7 @@ export default function Page() {
   const router = useRouter()
 
   const { setLoginMember } = useAuthContext()
+  const { isLogin } = useAuthContext()
 
   const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -54,6 +55,8 @@ export default function Page() {
         router.replace("/posts")
       })
   }
+
+  if (isLogin) return <>이미 로그인 상태입니다.</>
 
   return (
     <>
