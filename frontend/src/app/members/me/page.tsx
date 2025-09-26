@@ -1,8 +1,9 @@
 "use client"
 
+import withLogin from "@/global/auth/hoc/withLogin"
 import { useAuthContext } from "@/global/auth/hooks/useAuth"
 
-export default function Page() {
+export default withLogin(function Page() {
   const { isLogin, loginMember } = useAuthContext()
   return (
     <>
@@ -18,4 +19,4 @@ export default function Page() {
       )}
     </>
   )
-}
+})
