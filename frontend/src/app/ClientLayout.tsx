@@ -46,7 +46,7 @@ export default function ClientLayout({
             </Link>
           )}
           <a
-            href="http://localhost:8080/oauth2/authorization/kakao"
+            href="http://localhost:8080/oauth2/authorization/kakao?redirectUrl=http://localhost:3000"
             className="p-2 rounded hover:bg-gray-100"
           >
             카카오 로그인
