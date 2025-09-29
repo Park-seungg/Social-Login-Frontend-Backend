@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @ConfigurationProperties(prefix = "custom")
 public class CustomConfigProperties {
-    private List<NotProdMember> notProdMemberList;
+    private List<NotProdMember> notProdMembers;
 
     public record NotProdMember(
             String username,
