@@ -39,9 +39,15 @@ export default function ClientLayout({
               </button>
               <Link
                 href="/members/me"
-                className="p-2 rounded hover:bg-gray-100"
+                className="p-2 rounded hover:bg-gray-100 flex gap-2"
               >
-                {loginMember.nickname}님의 정보
+                <span>{loginMember.nickname}님의 정보</span>
+                <img
+                  src={loginMember.profileImageUrl}
+                  width="30"
+                  alt=""
+                  className="rounded-full object-cover aspect-[1/1]"
+                />
               </Link>
             </>
           ) : (
