@@ -267,6 +267,7 @@ export interface components {
             modifyDate: string;
             nickname: string;
             isAdmin: boolean;
+            profileImageUrl: string;
         };
         RsDataMemberDto: {
             resultCode: string;
