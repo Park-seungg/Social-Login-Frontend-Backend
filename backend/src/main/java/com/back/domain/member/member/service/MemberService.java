@@ -42,7 +42,8 @@ public class MemberService {
                     throw new ServiceException("409-1", "이미 존재하는 회원입니다.");
                 });
 
-        password = passwordEncoder.encode(password);
+        password = (password != null && !password.isEmpty()) ?
+                passwordEncoder.encode(password): null;
 
         Member member = new Member(username, password, nickname, profileImgUrl);
 

@@ -21,10 +21,10 @@ public class CustomOAuth2LoginSuccessHandler implements AuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        Member member = memberService.findById(3).get();
-        String accessToken = memberService.genAccessToken(member);
+        Member actor = rq.getActor();
+        String accessToken = memberService.genAccessToken(actor);
 
-        rq.setCookie("apiKey", member.getApiKey());
+        rq.setCookie("apiKey", actor.getApiKey());
         rq.setCookie("accessToken", accessToken);
 
         response.sendRedirect("http://localhost:3000");

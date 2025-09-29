@@ -39,16 +39,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String password = "";
 
-        // TODO: 회원가입 처리
         Member member = memberService.modifyOrJoin(username, password, nickname, profileImgUrl).data();
 
-        return new DefaultOAuth2User(List.of(),
-                attributes,
-                userRequest
-                        .getClientRegistration()
-                        .getProviderDetails()
-                        .getUserInfoEndpoint()
-                        .getUserNameAttributeName()
+        return new SecurityUser(
+                member.getId(),
+                member.getUsername(),
+                member.getPassword(),
+                member.getNickname(),
+                member.getAuthorities()
         );
     }
 }
