@@ -12,6 +12,12 @@ export default function ClientLayout({
   const authState = useAuthContext()
   const { loginMember, isLogin, logout } = authState
 
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+  const frontedBaseUrl = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL
+  const redirectUrl = encodeURIComponent(`${frontedBaseUrl}/members/me`)
+
+  const kakaoLoginUrl = `${apiBaseUrl}/oauth2/authorization/kakao?redirectUrl=${redirectUrl}`
+
   return (
     <>
       <header>
@@ -45,10 +51,7 @@ export default function ClientLayout({
               로그인
             </Link>
           )}
-          <a
-            href="http://localhost:8080/oauth2/authorization/kakao?redirectUrl=http://localhost:3000"
-            className="p-2 rounded hover:bg-gray-100"
-          >
+          <a href={kakaoLoginUrl} className="p-2 rounded hover:bg-gray-100">
             카카오 로그인
           </a>
         </nav>
