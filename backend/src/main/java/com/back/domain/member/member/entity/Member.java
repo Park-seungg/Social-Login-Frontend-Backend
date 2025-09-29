@@ -73,4 +73,12 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
     }
+
+    public String getProfileImgUrlDefault() {
+        if (profileImgUrl == null) {
+            return "https://picsum.photos/id/237/600/600";
+        }
+
+        return profileImgUrl;
+    }
 }
