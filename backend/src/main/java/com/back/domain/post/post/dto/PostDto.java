@@ -1,15 +1,14 @@
 package com.back.domain.post.post.dto;
 
 import com.back.domain.post.post.entity.Post;
-import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
-public record PostDto(@NonNull long id,
-                      @NonNull LocalDateTime createDate,
-                      @NonNull LocalDateTime modifyDate,
-                      @NonNull String title,
-                      @NonNull String content) {
+public record PostDto(long id,
+                     LocalDateTime createDate,
+                     LocalDateTime modifyDate,
+                     String title,
+                     String content) {
     public PostDto(Post post) {
         this(
                 post.getId(),
