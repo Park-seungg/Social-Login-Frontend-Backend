@@ -25,17 +25,26 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         String oauthUserId = oAuth2User.getName();
-        String providerTypeCode = userRequest.getClientRegistration().getRegistrationId().toLowerCase();
+        String providerTypeCode = userRequest.getClientRegistration().getRegistrationId().toUpperCase();
 
-        Map<String, Object> attributes = oAuth2User.getAttributes();
-        Map<String, Object> attributesProperties = (Map<String, Object>) attributes.get("properties");
+        String nickname = "";
+        String profileImgUrl = "";
+        String username = "";
 
-        String userNicknameAttributeName = "nickname";
-        String profileImgUrlAttributeName = "profile_image";
+        switch (providerTypeCode) {
+            case "KAKAO":
+                Map<String, Object> attributes = oAuth2User.getAttributes();
+                Map<String, Object> attributesProperties = (Map<String, Object>) attributes.get("properties");
 
-        String nickname = (String) attributesProperties.get(userNicknameAttributeName);
-        String profileImgUrl = (String) attributesProperties.get(profileImgUrlAttributeName);
-        String username = providerTypeCode + "__%s".formatted(oauthUserId);
+                nickname = (String) attributesProperties.get("nickname");
+                profileImgUrl = (String) attributesProperties.get("profile_image");
+                break;
+            case "GOOGLE":
+                nickname = (String) oAuth2User.getAttributes().get("name");
+                profileImgUrl = (String) oAuth2User.getAttributes().get("picture");
+                break;
+        }
+        username = providerTypeCode + "_" + oauthUserId;
 
         String password = "";
 
